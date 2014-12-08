@@ -1,27 +1,65 @@
 'use strict';
 
 angular.module('imgalleryApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
+  //.controller('MainCtrl', function ($scope, $http, socket) {
+  //  $scope.awesomeThings = [];
+  //
+  //  $http.get('/api/things').success(function(awesomeThings) {
+  //    $scope.awesomeThings = awesomeThings;
+  //    socket.syncUpdates('thing', $scope.awesomeThings);
+  //  });
+  //
+  //  $scope.addThing = function() {
+  //    if($scope.newThing === '') {
+  //      return;
+  //    }
+  //    $http.post('/api/things', { name: $scope.newThing });
+  //    $scope.newThing = '';
+  //  };
+  //
+  //  $scope.deleteThing = function(thing) {
+  //    $http.delete('/api/things/' + thing._id);
+  //  };
+  //
+  //  $scope.$on('$destroy', function () {
+  //    socket.unsyncUpdates('thing');
+  //  });
+  //});
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
-    });
+  .controller('MainCtrl',
+  ['$scope', 'imageFactory',
+    function ($scope, images) {
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
+      $scope.imgs = images.imageList;
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
+      $scope.addImg = function () {
+        if(!$scope.title || $scope.title === ''){return;}
 
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
-  });
+        $scope.imgs.push({
+          title: $scope.title,
+          image: '../assets/images/boots.jpg',
+          favourite: false,
+          link: $scope.link,
+          added: new Date(),
+          worn: [],
+          category: 'Shoes',
+          colors: ['black'],
+          price: 50,
+          seasons: ['any']
+        });
+        $scope.title = '';
+        $scope.link = '';
+
+      };
+
+      $scope.favourite = function (img) {
+        img.favourite = !img.favourite;
+
+      };
+
+      $scope.update = function (img) {
+        img.worn.push(new Date());
+      };
+    }
+  ]
+);

@@ -1,0 +1,54 @@
+<section>
+  <div id="wrapper">
+    <div id="image">
+      <a href id="back" navigate-back>Previous page</a>
+      <a href= {{img.image}} >
+        <img src= {{img.image}} alt="">
+      </a>
+
+
+
+      <img ng-show="{{img.favourite}}" class="heart" src="images/heart.png">
+      <img ng-hide="{{img.favourite}}" class="grey-heart" src="images/heart.png">
+
+
+
+
+      <button ng-class="!{{img.favourite}} && 'btn-warning'
+                                        || {{img.favourite}} && 'btn-danger'"
+              ng-click="favourite(img)"> &lt;3: {{img.favourite}} </button>
+
+
+      <button ng-click="update(img)"> Using it Today </button>
+      <h3>{{img.title}}</h3>
+
+      <!--<span ng-show="images.link">-->
+      <!--{{images.link}} <br>-->
+      <!--</span>-->
+
+      added: {{img.added}}
+      <br>
+
+      Price: {{img.price | currency : '£' : 2}}
+      <br>
+      Seasons :
+            <span ng-repeat="season in img.seasons">
+                {{season}}
+            </span>
+      <br>
+
+      Times worn -
+            <span ng-repeat="woreIt in img.worn">
+                {{woreIt}}
+            </span>
+      <br>
+
+      {{img.category}} -
+            <span ng-repeat="color in img.colors">
+                {{color}}
+            </span>
+      <br>
+
+    </div>
+  </div>
+</section>
